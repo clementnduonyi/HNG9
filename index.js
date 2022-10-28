@@ -7,7 +7,7 @@ const PORT = parseInt(process.env.PORT || 3000)
 
 
 server.get("/", (req, res) => {
-    res.send({"slackUsername": "Clement", "backend": "Yes", "age": 33, "bio": "MERN Stack and Ruby on Rails developer"})
+    res.send({"slackUsername": "Clement", "backend": true, "age": 33, "bio": "MERN Stack and Ruby on Rails developer"})
 })
 
 server.listen(PORT, (error) =>{
