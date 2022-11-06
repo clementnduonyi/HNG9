@@ -7,36 +7,43 @@ const PORT = parseInt(process.env.PORT || 3000)
 
 
 server.use(bodyParser.json())
-server.get("/", (req, res) => {
-    res.send({"slackUsername": "Clement", "backend": true, "age": 33, "bio": "MERN Stack and Ruby on Rails developer"})
-})
 
 const basicMathOperations = (req, res) => {
-    const operation_type = Object.freeze({
+    const Operations = Object.freeze({
         ADDITION: "addition", 
         SUBTRACTION: "subtraction",
         MULTIPLICATION: "multiplication"
     })
 
     
-    const x = req.body.x;
-    const y = req.body.y;
+    const {x, operation_type, y} = req.body;
     let result;
 
-    if(req.body.operation_type === operation_type.ADDITION){
+    if(operation_type === Operations.ADDITION && (typeof(x) === 'number') && (typeof(y) === 'number')){
         result = x + y;
     }
 
-    else if(req.body.operation_type === operation_type.SUBTRACTION){
+    else if(operation_type === Operations.SUBTRACTION  && (typeof(x) === 'number') && (typeof(y) === 'number')){
         result = x - y;
     }
 
-    else if(req.body.operation_type === operation_type.MULTIPLICATION){
+    else if(operation_type === Operations.MULTIPLICATION && (typeof(x) === 'number') && (typeof(y) === 'number')){
         result = x * y;
     }
-    return res.json({"slackUsername": "meggaclem", "result": result, "operation_type": req.body.operation_type})
+    else{
+        return res.json("Invalid input")
+    }
+    return res.json({
+        "slackUsername": "meggaclem", 
+        "result": result, 
+        "operation_type": operation_type
+    })
 }
 
+
+server.get("/", (req, res) => {
+    res.send({"slackUsername": "Clement", "backend": true, "age": 33, "bio": "MERN Stack and Ruby on Rails developer"})
+})
 
 server.post('/', basicMathOperations)
 
